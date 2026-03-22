@@ -124,6 +124,7 @@ body {
   opacity: 0.3;
   pointer-events: none;
   animation: slideAround 12s infinite linear;
+  font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
 }
 
 .fancy-btn {
@@ -139,7 +140,7 @@ body {
   overflow: hidden;
   box-shadow: 0 15px 0 #4a1a0a, 0 20px 35px rgba(0,0,0,0.3);
   transition: 0.07s linear;
-  font-family: inherit;
+  font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
   letter-spacing: 3px;
   animation: bouncePop 0.5s cubic-bezier(0.34, 1.2, 0.8, 1);
 }
@@ -153,6 +154,7 @@ body {
   font-size: 40px;
   position: relative;
   display: inline-block;
+  font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
 }
 
 /* большой заголовок */
@@ -168,7 +170,7 @@ body {
   box-shadow: 0 10px 20px rgba(0,0,0,0.2);
   color: #ffdd99;
   border: 4px solid #ff8844;
-  font-family: inherit;
+  font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
   animation: wiggle 2s infinite ease;
 }
 
@@ -195,6 +197,7 @@ body {
   color: #ffcc88;
   animation: rainbowGlow 2s infinite;
   letter-spacing: 2px;
+  font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
 }
 
 /* КАРТОЧКИ */
@@ -238,7 +241,7 @@ body {
   background: #442222;
   color: #ffaa77;
   border-top: 3px dashed #aa5555;
-  font-family: monospace;
+  font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
   letter-spacing: 1px;
 }
 
@@ -262,7 +265,7 @@ body {
   box-shadow: 0 0 15px rgba(255,0,0,0.5);
   animation: bouncePop 0.6s infinite alternate;
   backdrop-filter: blur(4px);
-  font-family: inherit;
+  font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
 }
 
 .crown-badge::before {
@@ -331,7 +334,7 @@ body {
   padding: 12px 30px;
   border-radius: 60px;
   backdrop-filter: blur(8px);
-  font-family: 'Comic Neue', 'Comic Sans MS', 'Comic Neue', cursive;
+  font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
   max-width: 85vw;
   text-align: center;
   animation: fadeIn 0.5s ease;
@@ -355,7 +358,7 @@ body {
   justify-content: center;
   transition: 0.2s;
   z-index: 1001;
-  font-family: monospace;
+  font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
 }
 
 #close:hover {
