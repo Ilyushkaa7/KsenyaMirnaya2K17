@@ -1,0 +1,397 @@
+/* ========== ГЛОБАЛЬНЫЙ СТИЛЬ С ПАДАЮЩИМИ ЭМОДЗИ ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  background: repeating-linear-gradient(45deg, #1a0b0b, #1a0b0b 35px, #2d1414 35px, #2d1414 70px);
+  font-family: 'Comic Neue', 'Comic Sans MS', 'Chalkboard SE', 'Poppins', cursive, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="27" viewBox="0 0 24 27"><polygon points="2,2 22,13 12,16 2,25" fill="%23ff4444" stroke="%23aa0000" stroke-width="1.5"/><circle cx="8" cy="10" r="2" fill="white"/></svg>') 8 4, auto;
+}
+
+/* КОНТЕЙНЕР ДЛЯ ПАДАЮЩИХ ЭМОДЗИ */
+#falling-emojis-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* СТИЛЬ ДЛЯ КАЖДОГО ПАДАЮЩЕГО ЭМОДЗИ */
+.falling-emoji {
+  position: fixed;
+  font-size: 35px;
+  pointer-events: none;
+  z-index: 1;
+  animation: fallDown linear forwards;
+  text-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+/* АНИМАЦИЯ ПАДЕНИЯ СВЕРХУ ВНИЗ */
+@keyframes fallDown {
+  0% {
+    transform: translateY(-100px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0.3;
+  }
+}
+
+/* Остальные анимации */
+@keyframes bouncePop {
+  0% { transform: scale(0.9); opacity: 0; }
+  60% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes wiggle {
+  0%,100% { transform: rotate(0deg); }
+  25% { transform: rotate(3deg); }
+  75% { transform: rotate(-3deg); }
+}
+
+@keyframes rainbowGlow {
+  0% { text-shadow: 0 0 3px red, 0 0 8px orange; }
+  33% { text-shadow: 0 0 3px lime, 0 0 8px yellow; }
+  66% { text-shadow: 0 0 3px cyan, 0 0 8px violet; }
+  100% { text-shadow: 0 0 3px red, 0 0 8px orange; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideAround {
+  0% { transform: translateX(-20%) rotate(0deg); }
+  100% { transform: translateX(20%) rotate(5deg); }
+}
+
+@keyframes bounceInCenter {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(-100px) rotate(20deg); opacity: 0; }
+}
+
+/* Чтобы контент был поверх фона */
+#start-screen, #big-title, #album, #overlay {
+  position: relative;
+  z-index: 2;
+}
+
+/* стартовый экран */
+#start-screen {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at 30% 10%, #8b3a3a, #4a1a1a);
+  position: relative;
+  overflow: hidden;
+  animation: fadeIn 1s ease;
+}
+
+#start-screen::before {
+  content: "👿 😈 👿 😈 👿 😈";
+  position: absolute;
+  font-size: 80px;
+  white-space: pre;
+  top: 10%;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  opacity: 0.3;
+  pointer-events: none;
+  animation: slideAround 12s infinite linear;
+}
+
+.fancy-btn {
+  position: relative;
+  padding: 22px 52px;
+  border: none;
+  cursor: pointer;
+  font-weight: 900;
+  font-size: 32px;
+  color: #fff8e7;
+  background: linear-gradient(135deg, #b84c2c, #7a2a1a);
+  border-radius: 60px;
+  overflow: hidden;
+  box-shadow: 0 15px 0 #4a1a0a, 0 20px 35px rgba(0,0,0,0.3);
+  transition: 0.07s linear;
+  font-family: inherit;
+  letter-spacing: 3px;
+  animation: bouncePop 0.5s cubic-bezier(0.34, 1.2, 0.8, 1);
+}
+
+.fancy-btn:active {
+  transform: translateY(6px);
+  box-shadow: 0 8px 0 #4a1a0a;
+}
+
+.fancy-btn .left, .fancy-btn .right {
+  font-size: 40px;
+  position: relative;
+  display: inline-block;
+}
+
+/* большой заголовок */
+#big-title {
+  font-size: 38px;
+  font-weight: 900;
+  padding: 35px 20px;
+  text-align: center;
+  display: none;
+  background: linear-gradient(135deg, #b84c2c, #7a2a1a);
+  margin: 20px 20px 0 20px;
+  border-radius: 70px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  color: #ffdd99;
+  border: 4px solid #ff8844;
+  font-family: inherit;
+  animation: wiggle 2s infinite ease;
+}
+
+/* альбом */
+#album {
+  display: none;
+  padding: 20px;
+  max-width: 680px;
+  margin: auto;
+}
+
+/* разделитель */
+.section-text {
+  font-size: 56px;
+  font-weight: bold;
+  margin: 50px 0 40px;
+  text-align: center;
+  background: #8b3a3a;
+  padding: 25px 12px;
+  border-radius: 90px;
+  display: inline-block;
+  width: 100%;
+  box-shadow: 0 12px 0 #4a1a1a;
+  color: #ffcc88;
+  animation: rainbowGlow 2s infinite;
+  letter-spacing: 2px;
+}
+
+/* КАРТОЧКИ */
+.card {
+  margin-bottom: 32px;
+  border-radius: 48px 24px 48px 24px;
+  overflow: hidden;
+  box-shadow: 0 18px 28px rgba(0,0,0,0.3);
+  cursor: pointer;
+  background: #2a1a1a;
+  transition: 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  border: 3px solid #aa4444;
+  position: relative;
+}
+
+.card:hover {
+  transform: scale(1.02) rotate(0.5deg);
+  box-shadow: 0 25px 35px rgba(0,0,0,0.4);
+  border-color: #ff6666;
+}
+
+.card:active {
+  transform: scale(0.98);
+}
+
+.card img, .card video.preview {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  background: #331111;
+}
+
+.card p {
+  padding: 16px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+  background: #442222;
+  color: #ffaa77;
+  border-top: 3px dashed #aa5555;
+  font-family: monospace;
+  letter-spacing: 1px;
+}
+
+/* коронное видео */
+.crown {
+  position: relative;
+  background: linear-gradient(145deg, #662222, #441111);
+}
+
+.crown-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: #ff4444;
+  color: #ffdd88;
+  font-weight: 900;
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-size: 18px;
+  z-index: 3;
+  box-shadow: 0 0 15px rgba(255,0,0,0.5);
+  animation: bouncePop 0.6s infinite alternate;
+  backdrop-filter: blur(4px);
+  font-family: inherit;
+}
+
+.crown-badge::before {
+  content: "👑😈 ";
+  font-size: 20px;
+}
+
+/* ОВЕРЛЕЙ — ПО ЦЕНТРУ */
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.95);
+  backdrop-filter: blur(20px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s ease;
+  z-index: 1000;
+}
+
+#overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* КОНТЕЙНЕР ДЛЯ КОНТЕНТА — ЦЕНТР */
+#overlay-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  max-width: 95vw;
+  max-height: 90vh;
+  text-align: center;
+}
+
+/* И картинка, и видео — строго по центру */
+#overlay-content img,
+#overlay-content video {
+  max-width: 90vw;
+  max-height: 75vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 32px;
+  box-shadow: 0 20px 35px rgba(0,0,0,0.5), 0 0 0 6px #ff4444, 0 0 0 12px #aa2222;
+  animation: bounceInCenter 0.4s cubic-bezier(0.34, 1.3, 0.7, 1);
+  margin: 20px auto;
+  display: block;
+}
+
+/* текст под медиа */
+#overlay-content p {
+  color: #ffcc99;
+  font-size: 26px;
+  font-weight: bold;
+  margin-top: 20px;
+  background: #000000aa;
+  display: inline-block;
+  padding: 12px 30px;
+  border-radius: 60px;
+  backdrop-filter: blur(8px);
+  font-family: 'Comic Neue', 'Comic Sans MS', cursive;
+  max-width: 85vw;
+  text-align: center;
+  animation: fadeIn 0.5s ease;
+}
+
+/* кнопка закрытия */
+#close {
+  position: absolute;
+  top: 25px;
+  right: 35px;
+  font-size: 55px;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  background: rgba(255,68,68,0.8);
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+  z-index: 1001;
+  font-family: monospace;
+}
+
+#close:hover {
+  background: #ff2222;
+  transform: scale(1.1) rotate(90deg);
+}
+
+/* адаптив для телефонов */
+@media (max-width: 600px) {
+  .fancy-btn {
+    font-size: 22px;
+    padding: 18px 35px;
+  }
+  
+  #big-title {
+    font-size: 24px;
+    padding: 25px 15px;
+  }
+  
+  .section-text {
+    font-size: 38px;
+  }
+  
+  .card p {
+    font-size: 16px;
+  }
+  
+  #overlay-content p {
+    font-size: 18px;
+    padding: 8px 20px;
+  }
+  
+  #close {
+    width: 50px;
+    height: 50px;
+    font-size: 40px;
+    top: 15px;
+    right: 15px;
+  }
+  
+  .falling-emoji {
+    font-size: 25px;
+  }
+}
