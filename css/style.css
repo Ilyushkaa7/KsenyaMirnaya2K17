@@ -8,10 +8,15 @@
 body {
   position: relative;
   background: repeating-linear-gradient(45deg, #1a0b0b, #1a0b0b 35px, #2d1414 35px, #2d1414 70px);
-  font-family: 'Ariel';
+  font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
   min-height: 100vh;
   overflow-x: hidden;
   cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="27" viewBox="0 0 24 27"><polygon points="2,2 22,13 12,16 2,25" fill="%23ff4444" stroke="%23aa0000" stroke-width="1.5"/><circle cx="8" cy="10" r="2" fill="white"/></svg>') 8 4, auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 /* КОНТЕЙНЕР ДЛЯ ПАДАЮЩИХ ЭМОДЗИ */
@@ -326,7 +331,7 @@ body {
   padding: 12px 30px;
   border-radius: 60px;
   backdrop-filter: blur(8px);
-  font-family: 'Comic Neue', 'Comic Sans MS', cursive;
+  font-family: 'Comic Neue', 'Comic Sans MS', 'Comic Neue', cursive;
   max-width: 85vw;
   text-align: center;
   animation: fadeIn 0.5s ease;
@@ -358,29 +363,60 @@ body {
   transform: scale(1.1) rotate(90deg);
 }
 
-/* адаптив для телефонов */
-@media (max-width: 600px) {
+/* ========== АДАПТИВ ДЛЯ ТЕЛЕФОНОВ ========== */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+  
   .fancy-btn {
     font-size: 22px;
     padding: 18px 35px;
+    letter-spacing: 2px;
+  }
+  
+  .fancy-btn .left, 
+  .fancy-btn .right {
+    font-size: 28px;
   }
   
   #big-title {
     font-size: 24px;
-    padding: 25px 15px;
+    padding: 20px 15px;
+    margin: 15px 15px 0 15px;
   }
   
   .section-text {
-    font-size: 38px;
+    font-size: 32px;
+    padding: 18px 12px;
+    margin: 30px 0 25px;
+  }
+  
+  .card img, 
+  .card video.preview {
+    height: 220px;
   }
   
   .card p {
+    font-size: 16px;
+    padding: 12px;
+  }
+  
+  .crown-badge {
+    font-size: 14px;
+    padding: 5px 12px;
+    top: 12px;
+    left: 12px;
+  }
+  
+  .crown-badge::before {
     font-size: 16px;
   }
   
   #overlay-content p {
     font-size: 18px;
     padding: 8px 20px;
+    margin-top: 15px;
   }
   
   #close {
@@ -392,6 +428,83 @@ body {
   }
   
   .falling-emoji {
-    font-size: 25px;
+    font-size: 28px;
+  }
+}
+
+/* ДЛЯ ОЧЕНЬ МАЛЕНЬКИХ ЭКРАНОВ */
+@media (max-width: 480px) {
+  body {
+    font-size: 13px;
+  }
+  
+  .fancy-btn {
+    font-size: 18px;
+    padding: 14px 28px;
+  }
+  
+  .fancy-btn .left, 
+  .fancy-btn .right {
+    font-size: 24px;
+  }
+  
+  #big-title {
+    font-size: 20px;
+    padding: 16px 12px;
+  }
+  
+  .section-text {
+    font-size: 26px;
+    padding: 14px 10px;
+  }
+  
+  .card img, 
+  .card video.preview {
+    height: 180px;
+  }
+  
+  .card p {
+    font-size: 14px;
+    padding: 10px;
+  }
+  
+  #overlay-content p {
+    font-size: 16px;
+    padding: 6px 16px;
+  }
+  
+  .falling-emoji {
+    font-size: 24px;
+  }
+}
+
+/* ДЛЯ ПЛАНШЕТОВ */
+@media (min-width: 769px) and (max-width: 1024px) {
+  body {
+    font-size: 15px;
+  }
+  
+  .section-text {
+    font-size: 44px;
+  }
+  
+  .card img, 
+  .card video.preview {
+    height: 260px;
+  }
+}
+
+/* УЛУЧШЕНИЯ ДЛЯ ТАЧ-УСТРОЙСТВ */
+@media (hover: none) and (pointer: coarse) {
+  .card:hover {
+    transform: none;
+  }
+  
+  .fancy-btn:active {
+    transform: translateY(6px);
+  }
+  
+  #close:hover {
+    transform: none;
   }
 }
