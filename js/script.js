@@ -13,18 +13,15 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // ========== ФУНКЦИЯ СОЗДАНИЯ ПАДАЮЩИХ ЭМОДЗИ 👿😈 ==========
   function createFallingEmoji() {
-    const emojis = ['👿', '😈']; // ТОЛЬКО ЭТИ ДВА!
+    const emojis = ['👿', '😈'];
     const emoji = emojis[Math.floor(Math.random() * emojis.length)];
     
     const fallingDiv = document.createElement('div');
     fallingDiv.className = 'falling-emoji';
     fallingDiv.textContent = emoji;
     
-    // Случайная позиция по горизонтали (от 0 до ширины экрана)
     const startX = Math.random() * window.innerWidth;
-    // Случайная скорость падения (от 3 до 8 секунд)
     const duration = 3 + Math.random() * 5;
-    // Случайный размер (от 25px до 50px)
     const size = 25 + Math.random() * 30;
     
     fallingDiv.style.left = startX + 'px';
@@ -34,7 +31,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     fallingContainer.appendChild(fallingDiv);
     
-    // Удаляем элемент после завершения анимации
     setTimeout(() => {
       if (fallingDiv && fallingDiv.remove) {
         fallingDiv.remove();
@@ -42,14 +38,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }, duration * 1000);
   }
   
-  // ========== ЗАПУСКАЕМ ПАДАЮЩИЕ ЭМОДЗИ ==========
-  // Создаем эмодзи каждые 0.5 секунд
+  // Запускаем падающие эмодзи
   let fallingInterval;
   
   function startFallingEmojis() {
     if (fallingInterval) clearInterval(fallingInterval);
     fallingInterval = setInterval(() => {
-      // Создаем от 1 до 3 эмодзи за раз
       const count = Math.floor(Math.random() * 2) + 1;
       for (let i = 0; i < count; i++) {
         createFallingEmoji();
@@ -64,10 +58,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   
-  // Запускаем падающие эмодзи сразу после загрузки страницы
   startFallingEmojis();
   
-  // Функция создания конфетти эффекта при старте (злодейское конфетти)
+  // Функция создания конфетти
   function createConfetti() {
     const villainEmojis = ['👿', '😈', '👿', '😈', '👿', '😈'];
     for(let i = 0; i < 60; i++) {
@@ -93,24 +86,39 @@ document.addEventListener('DOMContentLoaded', function() {
       album.style.display = 'block';
       createConfetti();
       
-      // Прокрутка к началу альбома
       setTimeout(() => {
         album.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 100);
     };
   }
   
-  // Автопревью для видео
+  // ========== УЛУЧШЕННАЯ ЗАГРУЗКА ВИДЕО ПРЕВЬЮ ==========
   document.querySelectorAll('.card[data-type="video"]').forEach(card => {
     const src = card.dataset.src;
     if(src && src !== '') {
+      // Проверяем существование файла
       const videoPreview = document.createElement('video');
-      videoPreview.src = src;
       videoPreview.className = 'preview';
       videoPreview.muted = true;
       videoPreview.preload = 'metadata';
       videoPreview.playsInline = true;
       videoPreview.loop = false;
+      
+      // Добавляем обработчик ошибки
+      videoPreview.onerror = function() {
+        console.warn('Видео не найдено:', src);
+        // Если видео не найдено, показываем заглушку
+        const placeholder = document.createElement('div');
+        placeholder.className = 'preview';
+        placeholder.style.cssText = 'width:100%; height:280px; background: #331111; display:flex; align-items:center; justify-content:center; font-size:48px;';
+        placeholder.innerHTML = '🎬❌';
+        if(card.querySelector('.preview')) {
+          card.querySelector('.preview').remove();
+        }
+        card.prepend(placeholder);
+      };
+      
+      videoPreview.src = src;
       
       videoPreview.addEventListener('loadeddata', () => {
         try {
@@ -118,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch(e) {}
       });
       
-      // Вставляем превью перед параграфом
+      // Вставляем превью
       const p = card.querySelector('p');
       if(p) {
         card.insertBefore(videoPreview, p);
@@ -128,13 +136,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
   
-  // Открытие карточки (фото/видео по центру)
+  // ========== УЛУЧШЕННОЕ ОТКРЫТИЕ ВИДЕО ==========
   document.querySelectorAll('.card').forEach(card => {
     card.onclick = (e) => {
       e.stopPropagation();
       
       const type = card.dataset.type;
-      const src = card.dataset.src;
+      let src = card.dataset.src;
       const text = card.dataset.text || '😈 Злодейская история! 😈';
       
       content.innerHTML = '';
@@ -143,17 +151,40 @@ document.addEventListener('DOMContentLoaded', function() {
         const img = document.createElement('img');
         img.src = src;
         img.alt = 'Веселая фотка';
+        img.onerror = function() {
+          this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23331111"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="%23ff8888" font-size="40"%3E❌%3C/text%3E%3C/svg%3E';
+        };
         content.appendChild(img);
       }
       
       if(type === 'video' && src) {
         const video = document.createElement('video');
+        // Пробуем разные варианты расширений если файл не найден
         video.src = src;
         video.controls = true;
         video.autoplay = true;
         video.playsInline = true;
         video.style.maxWidth = '90vw';
         video.style.maxHeight = '75vh';
+        video.style.backgroundColor = '#000';
+        
+        // Обработчик ошибки для видео
+        video.onerror = function() {
+          console.error('Видео не загрузилось:', src);
+          // Показываем сообщение об ошибке
+          const errorDiv = document.createElement('div');
+          errorDiv.style.cssText = 'color:#ff8888; text-align:center; padding:40px; background:#2a1a1a; border-radius:20px;';
+          errorDiv.innerHTML = '🎬 Видео не найдено 🎬<br><small style="font-size:14px">Файл: ' + src.split('/').pop() + '</small>';
+          content.innerHTML = '';
+          content.appendChild(errorDiv);
+          
+          // Добавляем текст под ошибкой
+          const p = document.createElement('p');
+          p.innerText = text + ' 😈';
+          content.appendChild(p);
+          return;
+        };
+        
         content.appendChild(video);
       }
       
@@ -170,7 +201,6 @@ document.addEventListener('DOMContentLoaded', function() {
   if(close) {
     close.onclick = () => {
       overlay.classList.remove('show');
-      // Останавливаем видео, если оно играло
       const video = content.querySelector('video');
       if(video) {
         video.pause();
@@ -192,7 +222,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
   
-  // Добавляем злодейские эмодзи в углы карточек (только 👿😈)
+  // Добавляем эмодзи в углы карточек
   const villainEmojisCorner = ['👿', '😈', '👿', '😈', '👿', '😈', '👿', '😈'];
   document.querySelectorAll('.card').forEach((card, idx) => {
     const badge = document.createElement('div');
@@ -207,7 +237,7 @@ document.addEventListener('DOMContentLoaded', function() {
     card.appendChild(badge);
   });
   
-  // Добавляем летающие злодейские смайлы при наведении на карточки (только 👿😈)
+  // Летающие смайлы при наведении
   document.querySelectorAll('.card').forEach(card => {
     card.addEventListener('mouseenter', function(e) {
       const villainFly = ['👿', '😈'];
@@ -226,5 +256,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
-  console.log('👿 Падающие эмодзи 👿 и 😈 активны! Злодейское веселье началось!');
+  // Выводим список всех видео для отладки
+  console.log('=== ПРОВЕРКА ВИДЕО ФАЙЛОВ ===');
+  const videos = document.querySelectorAll('.card[data-type="video"]');
+  videos.forEach((card, i) => {
+    console.log(`Видео ${i+1}: ${card.dataset.src}`);
+  });
+  
+  console.log('👿 Падающие эмодзи 👿 и 😈 активны!');
 });
