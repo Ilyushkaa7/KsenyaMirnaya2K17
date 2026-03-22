@@ -8,7 +8,7 @@
 body {
   position: relative;
   background: repeating-linear-gradient(45deg, #1a0b0b, #1a0b0b 35px, #2d1414 35px, #2d1414 70px);
-  font-family: 'Comic Neue', 'Comic Sans MS', 'Chalkboard SE', 'Poppins', cursive, sans-serif;
+  font-family: 'Ariel';
   min-height: 100vh;
   overflow-x: hidden;
   cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="27" viewBox="0 0 24 27"><polygon points="2,2 22,13 12,16 2,25" fill="%23ff4444" stroke="%23aa0000" stroke-width="1.5"/><circle cx="8" cy="10" r="2" fill="white"/></svg>') 8 4, auto;
